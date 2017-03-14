@@ -20,16 +20,16 @@ confcase           = UPWELLING_ICE
 machine            = yellowstone
 namelist_skel      = ocean_UPWELLING_ICE.template
 use_leap_years     = True
-NtileI             = 1
-NTileJ             = 2
-grid_file          = /glade/scratch/chuning/gb_roms/data/roms_prep/GB_grd_nocurv.nc
-init_file          = /glade/scratch/chuning/gb_roms/data/roms_prep/GlacierBay_ic_2000_01_03_SODA3.3.1.nc
-nudging_file       = /glade/scratch/chuning/gb_roms/data/roms_prep/GlacierBay_clim_SODA3.3.1_y2000.nc
-bdry_file          = /glade/scratch/chuning/gb_roms/data/roms_prep/GlacierBay_bdry_2000_SODA3.3.1.nc
-tide_file          = /glade/scratch/chuning/gb_roms/data/roms_prep/GB_tides_otps.nc
+NtileI             = 4
+NTileJ             = 8
+grid_file          = /glade/scratch/chuning/gb_roms/GB_grd_nocurv.nc
+init_file          = /glade/scratch/chuning/gb_roms/bc_ic/GlacierBay_ic_2000_01_03_SODA3.3.1.nc
+nudging_file       = /glade/scratch/chuning/gb_roms/bc_ic/GlacierBay_clim_SODA3.3.1_y2000.nc
+bdry_file          = /glade/scratch/chuning/gb_roms/bc_ic/GlacierBay_bdry_2000_SODA3.3.1.nc
+tide_file          = /glade/scratch/chuning/gb_roms/frc/GB_tides_otps.nc
 sssr_file          = /glade/scratch/chuning/sss.nc
-runoff_file        = /glade/scratch/chuning/runoff.nc
-forcing_dir        = /glade/scratch/chuning/gb_roms/data/roms_prep/frc
+runoff_file        = /glade/scratch/chuning/gb_roms/frc/GlacierBay_rivers.nc
+forcing_dir        = /glade/scratch/chuning/gb_roms/frc
 output_dir         = /glade/scratch/chuning/tmpdir_UPWELLING_ICE
 
 [GB-TEST]

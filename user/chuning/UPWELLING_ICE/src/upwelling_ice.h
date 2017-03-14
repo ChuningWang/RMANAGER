@@ -13,19 +13,18 @@
 */
 
 /* general 1  */
-#define NO_HIS
+#undef NO_HIS
 #define HDF5
-#undef DEFLATE
+#define DEFLATE
 #define PERFECT_RESTART
-
 
 /* general 2 */
 #define CURVGRID
 #define MASKING
 #define NONLIN_EOS
 
-#define SOLVE3D
 #define SALINITY
+#define SOLVE3D
 
 #ifdef SOLVE3D
 # define SPLINES_VDIFF
@@ -71,28 +70,26 @@
 #endif
 
 /* vertical mixing */
-#undef LMD_MIXING
-#ifdef LMD_MIXING
-# define LMD_RIMIX
-# define LMD_CONVEC
-# define LMD_SKPP
-# define LMD_NONLOCAL
-# define LMD_SHAPIRO
-# undef LMD_DDMIX
-#endif
+#ifdef SOLVE3D
+# undef WTYPE_GRID  /* requires variable 'wtype_grid' in grid file */
 
-#define GLS_MIXING
-#if defined GLS_MIXING || defined MY25_MIXING
-# define KANTHA_CLAYSON
-# define N2S2_HORAVG
-# define RI_SPLINES
-#endif
+# define LMD_MIXING
+# ifdef LMD_MIXING
+#  define LMD_RIMIX
+#  define LMD_CONVEC
+#  define LMD_SKPP
+#  define LMD_NONLOCAL
+#  define LMD_SHAPIRO
+#  undef LMD_DDMIX
+# endif
 
-#ifdef PERFECT_RESTART
-# undef  AVERAGES
-# undef  DIAGNOSTICS_TS
-# undef  DIAGNOSTICS_UV
-# define OUT_DOUBLE
+# undef GLS_MIXING
+# undef MY25_MIXING
+# if defined GLS_MIXING || defined MY25_MIXING
+#  define KANTHA_CLAYSON
+#  define N2S2_HORAVG
+#  define RI_SPLINES
+# endif
 #endif
 
 /* surface forcing */
@@ -105,23 +102,26 @@
 #  define SOLAR_SOURCE
 #  define EMINUSP
 #  define ALBEDO_CURVE  /* for water */
-#  define ICE_ALB_EC92  /* for ice */
+#  undef ICE_ALB_EC92  /* for ice */
 # endif
 # undef SCORRECTION
+#else
+# define ANA_SMFLUX
+# define ANA_STFLUX
+# define ANA_SSFLUX
 #endif
 
 /* tides */
-
-#undef LTIDES
+#define LTIDES
 #ifdef LTIDES
 # if defined AVERAGES && !defined USE_DEBUG
-#  define FILTERED
+#  undef FILTERED
 # endif
 # define SSH_TIDES
 # define UV_TIDES
 # define ADD_FSOBC
 # define ADD_M2OBC
-# define TIDES_ASTRO
+# undef TIDES_ASTRO
 # undef POT_TIDES
 
 # define UV_DRAG_GRID
@@ -130,9 +130,13 @@
 # define ANA_DRAG
 # define LIMIT_BSTRESS
 #else
-# define UV_DRAG_GRID
 # define UV_QDRAG
-# define ANA_DRAG
+#endif
+
+/* point sources (rivers, line sources) */
+#ifdef SOLVE3D
+# undef RUNOFF
+# define ONE_TRACER_SOURCE
 #endif
 
 /* Boundary conditions...careful with grid orientation */

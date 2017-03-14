@@ -24,7 +24,7 @@ my_run = 'UPWELLING_ICE'
 submission_opts = {}
 # options when you use yellowstone
 submission_opts['subcmd']      = 'bsub < ./'  # batch scheduler command : bsub, srun, llsubmit,...
-submission_opts['walltime']    = '00:15'      # walltime
+submission_opts['walltime']    = '01:00'      # walltime
 submission_opts['projectcode'] = 'URTG0012'  # project code for accounting
 submission_opts['queue']       = 'regular'
 # options when you use triton16 or triton24
