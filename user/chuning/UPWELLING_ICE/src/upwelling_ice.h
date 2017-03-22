@@ -25,11 +25,31 @@
 
 #define SALINITY
 #define SOLVE3D
+#define WET_DRY
 
 #ifdef SOLVE3D
 # define SPLINES_VDIFF
 # define SPLINES_VVISC
 # define RI_SPLINES
+#endif
+
+/* ice */
+#ifdef SOLVE3D
+# define  ICE_MODEL
+# ifdef ICE_MODEL
+#  define ANA_ICE
+#  define  ICE_THERMO
+#  define  ICE_MK
+#  define  ICE_MOMENTUM
+#  define  ICE_MOM_BULK
+#  define  ICE_EVP
+#  define  ICE_STRENGTH_QUAD
+#  define  ICE_ADVECT
+#  define  ICE_SMOLAR
+#  define  ICE_UPWIND
+#  define  ICE_BULK_FLUXES
+#  define  ICE_I_O
+# endif
 #endif
 
 /* output stuff */
