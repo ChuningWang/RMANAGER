@@ -1,0 +1,13 @@
+benchmark2, change nI, nJ, nK
+
+test#   nI  nJ  CPUTime
+1       8   1   1427.469
+2       8   1   1432.809
+3       32  4   1802.830
+4       32  4   1811.479
+5       16  2   1397.048
+
+nx, xy, xz = 1024, 512, 40, close to my own simulation
+
+test#   nI  nJ  CPUTime
+1       16  8   

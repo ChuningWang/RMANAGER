@@ -17,7 +17,7 @@ import sys
 # write here the complete path to the directory containing your runs.archive
 # typically $HOME/RMANAGER/user/yourself
 my_archive = '/glade/u/home/chuning/git/RMANAGER/user/chuning'
-my_run = 'UPWELLING_ICE'
+my_run = 'GB-SPINUP'
 
 # submission parameters dictionary
 # this contains informations ti customize your submission script
