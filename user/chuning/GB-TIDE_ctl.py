@@ -17,14 +17,14 @@ import sys
 # write here the complete path to the directory containing your runs.archive
 # typically $HOME/RMANAGER/user/yourself
 my_archive = '/glade/u/home/chuning/git/RMANAGER/user/chuning'
-my_run = 'GB-SPINUP'
+my_run = 'GB-TIDE'
 
 # submission parameters dictionary
 # this contains informations ti customize your submission script
 submission_opts = {}
 # options when you use yellowstone
 submission_opts['subcmd']      = 'bsub < ./'  # batch scheduler command : bsub, srun, llsubmit,...
-submission_opts['walltime']    = '01:00'      # walltime
+submission_opts['walltime']    = '02:00'      # walltime
 submission_opts['projectcode'] = 'URTG0012'  # project code for accounting
 submission_opts['queue']       = 'regular'
 # options when you use triton16 or triton24
@@ -40,7 +40,7 @@ submission_opts['queue']       = 'regular'
 
 # init of the run object
 # give the name of the simulation as defined in runs.archive
-run = rr.run_manager(my_run, my_archive, submission_opts)
+run = rr.run_manager(my_run, my_archive,submission_opts)
 
 # secondary namelists : put here the name of the files that need to be copied
 # to the run directory.
@@ -54,7 +54,7 @@ nam_files = ['varinfo.dat', 'ice.in']
 dir_nam_files = my_archive + '/' + my_run
 
 # run length
-lastjob=1
+lastjob=0
 
 # job duration (1y/6m/3m/1m)
 jobduration='1d'

@@ -64,7 +64,7 @@
 !
 ! Application title.
 
-       TITLE = Glacier Bay spin-up run
+       TITLE = Glacier Bay tide run
 
 ! C-preprocessing Flag.
 
@@ -146,8 +146,8 @@ GridsInLayer =  1
 !                   1       2       3       4
 
    LBC(isFsur) ==   Cha     Clo     Cha     Clo         ! free-surface
-   LBC(isUbar) ==   Shc     Clo     Shc     Clo         ! 2D U-momentum
-   LBC(isVbar) ==   Shc     Clo     Shc     Clo         ! 2D V-momentum
+   LBC(isUbar) ==   Fla     Clo     Fla     Clo         ! 2D U-momentum
+   LBC(isVbar) ==   Fla     Clo     Fla     Clo         ! 2D V-momentum
    LBC(isUvel) ==   RadNud  Clo     RadNud  Clo         ! 3D U-momentum
    LBC(isVvel) ==   RadNud  Clo     RadNud  Clo         ! 3D V-momentum
    LBC(isMtke) ==   Gra     Clo     Gra     Clo         ! mixing TKE
@@ -200,7 +200,7 @@ ad_VolCons(north) ==  F                            ! northern boundary
 ! Time-Stepping parameters.
 
        NTIMES == <NSTEPS>
-          DT == 20.0d0
+          DT == 5.0d0
      NDTFAST == 12
 
 ! Model iteration loops parameters.

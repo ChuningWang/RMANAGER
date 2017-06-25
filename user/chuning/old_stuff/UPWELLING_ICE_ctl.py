@@ -17,7 +17,7 @@ import sys
 # write here the complete path to the directory containing your runs.archive
 # typically $HOME/RMANAGER/user/yourself
 my_archive = '/glade/u/home/chuning/git/RMANAGER/user/chuning'
-my_run = 'GB-SPINUP'
+my_run = 'UPWELLING_ICE'
 
 # submission parameters dictionary
 # this contains informations ti customize your submission script
@@ -46,7 +46,7 @@ run = rr.run_manager(my_run, my_archive, submission_opts)
 # to the run directory.
 # those files can be varinfo.dat, ice.in, bio.in,...
 #nam_files = ['varinfo.dat','ice.in','bio.in','fish.in','fleet.in','pred.in','nemsan.in']
-nam_files = ['varinfo.dat', 'ice.in']
+nam_files = ['varinfo.dat']
 
 # directory where namelist files listed above are stored
 # ideally, create a directory with the same name as your run
@@ -54,7 +54,7 @@ nam_files = ['varinfo.dat', 'ice.in']
 dir_nam_files = my_archive + '/' + my_run
 
 # run length
-lastjob=1
+lastjob=2
 
 # job duration (1y/6m/3m/1m)
 jobduration='1d'

@@ -142,7 +142,7 @@
 
 /* tides */
 
-#undef LTIDES
+#define LTIDES
 #ifdef LTIDES
 # if defined AVERAGES && !defined USE_DEBUG
 #  define FILTERED

@@ -64,11 +64,11 @@
 !
 ! Application title.
 
-       TITLE = Glacier Bay spin-up run
+       TITLE = Wind-Driven Upwelling/Downwelling over a Periodic Channel
 
 ! C-preprocessing Flag.
 
-    MyAppCPP = GB
+    MyAppCPP = UPWELLING
 
 ! Input variable information file name.  This file needs to be processed
 ! first so all information arrays can be initialized properly.
@@ -91,9 +91,9 @@ GridsInLayer =  1
 ! Grid dimension parameters. See notes below in the Glossary for how to set
 ! these parameters correctly.
 
-          Lm == 500           ! Number of I-direction INTERIOR RHO-points
-          Mm == 1000          ! Number of J-direction INTERIOR RHO-points
-           N == 40            ! Number of vertical levels
+          Lm == 41            ! Number of I-direction INTERIOR RHO-points
+          Mm == 80            ! Number of J-direction INTERIOR RHO-points
+           N == 16            ! Number of vertical levels
 
         Nbed =  0             ! Number of sediment bed layers
 
@@ -145,15 +145,15 @@ GridsInLayer =  1
 !
 !                   1       2       3       4
 
-   LBC(isFsur) ==   Cha     Clo     Cha     Clo         ! free-surface
-   LBC(isUbar) ==   Shc     Clo     Shc     Clo         ! 2D U-momentum
-   LBC(isVbar) ==   Shc     Clo     Shc     Clo         ! 2D V-momentum
-   LBC(isUvel) ==   RadNud  Clo     RadNud  Clo         ! 3D U-momentum
-   LBC(isVvel) ==   RadNud  Clo     RadNud  Clo         ! 3D V-momentum
-   LBC(isMtke) ==   Gra     Clo     Gra     Clo         ! mixing TKE
-                                          
-   LBC(isTvar) ==   RadNud  Clo     RadNud  Clo \       ! temperature
-                    RadNud  Clo     RadNud  Clo         ! salinity
+   LBC(isFsur) ==   Per     Clo     Per     Clo         ! free-surface
+   LBC(isUbar) ==   Per     Clo     Per     Clo         ! 2D U-momentum
+   LBC(isVbar) ==   Per     Clo     Per     Clo         ! 2D V-momentum
+   LBC(isUvel) ==   Per     Clo     Per     Clo         ! 3D U-momentum
+   LBC(isVvel) ==   Per     Clo     Per     Clo         ! 3D V-momentum
+   LBC(isMtke) ==   Per     Clo     Per     Clo         ! mixing TKE
+
+   LBC(isTvar) ==   Per     Clo     Per     Clo \       ! temperature
+                    Per     Clo     Per     Clo         ! salinity
 
 ! Ice boundary conditions
 
@@ -178,7 +178,7 @@ ad_LBC(isVbar) ==   Per     Clo     Per     Clo         ! 2D U-momentum
 ad_LBC(isUvel) ==   Per     Clo     Per     Clo         ! 3D U-momentum
 ad_LBC(isVvel) ==   Per     Clo     Per     Clo         ! 3D V-momentum
 ad_LBC(isMtke) ==   Per     Clo     Per     Clo         ! mixing TKE
-                                       
+
 ad_LBC(isTvar) ==   Per     Clo     Per     Clo \       ! temperature
                     Per     Clo     Per     Clo         ! salinity
 
@@ -200,8 +200,8 @@ ad_VolCons(north) ==  F                            ! northern boundary
 ! Time-Stepping parameters.
 
        NTIMES == <NSTEPS>
-          DT == 20.0d0
-     NDTFAST == 12
+          DT == 300
+     NDTFAST == 30
 
 ! Model iteration loops parameters.
 
@@ -225,33 +225,33 @@ ad_VolCons(north) ==  F                            ! northern boundary
         NRST == <NRESTART>
         NSTA == 1
         NFLT == 1
-       NINFO == 30
+       NINFO == 1
 
 ! Output history, average, diagnostic files parameters.
 
      LDEFOUT == <LDEFOUT>
-        NHIS == 4320
-     NDEFHIS == 4320
+        NHIS == 72
+     NDEFHIS == 72
       NTSAVG == 1
-        NAVG == 180
-     NDEFAVG == 180
+        NAVG == 72
+     NDEFAVG == 72
      NTSAVG2 == 1
-       NAVG2 == 30240
-    NDEFAVG2 == 0
+       NAVG2 == 720
+    NDEFAVG2 == 720
       NTSDIA == 1
-        NDIA == 4320
-     NDEFDIA == 4320
+        NDIA == 72
+     NDEFDIA == 72
 
 ! Output tangent linear and adjoint models parameters.
 
    LcycleTLM == F
-        NTLM == 180
+        NTLM == 72
      NDEFTLM == 0
    LcycleADJ == F
-        NADJ == 180
+        NADJ == 72
      NDEFADJ == 0
-        NSFF == 4320
-        NOBC == 4320
+        NSFF == 72
+        NOBC == 72
 
 ! GST output and check pointing restart parameters.
 
@@ -267,7 +267,7 @@ ad_VolCons(north) ==  F                            ! northern boundary
 ! Harmonic/biharmonic horizontal diffusion of tracer for nonlinear model
 ! and adjoint-based algorithms: [1:NAT+NPT,Ngrids].
 
-        TNU2 == 2*2.0d0                         ! m2/s
+        TNU2 == 2*0.0d0                         ! m2/s
         TNU4 == 2*0.0d0                         ! m4/s
 
      ad_TNU2 == 0.0d0  0.0d0                    ! m2/s
@@ -276,7 +276,7 @@ ad_VolCons(north) ==  F                            ! northern boundary
 ! Harmonic/biharmonic, horizontal viscosity coefficient for nonlinear model
 ! and adjoint-based algorithms: [Ngrids].
 
-       VISC2 == 25.0d0                          ! m2/s
+       VISC2 == 5.0d0                           ! m2/s
        VISC4 == 0.0d0                           ! m4/s
 
     ad_VISC2 == 0.0d0                           ! m2/s
@@ -379,9 +379,9 @@ LtracerSponge == F F                            ! temperature, salinity, inert
 
 ! Vertical S-coordinates parameters (see below for details), [1:Ngrids].
 
-     THETA_S == 8.0d0                      ! surface stretching parameter
-     THETA_B == 2.0d0                      ! bottom  stretching parameter
-      TCLINE == 10.0d0                     ! critical depth (m)
+     THETA_S == 3.0d0                      ! surface stretching parameter
+     THETA_B == 0.0d0                      ! bottom  stretching parameter
+      TCLINE == 25.0d0                     ! critical depth (m)
 
 ! Mean Density and Brunt-Vaisala frequency.
 
@@ -392,9 +392,9 @@ LtracerSponge == F F                            ! temperature, salinity, inert
 ! origin for tidal forcing, and model reference time for output
 ! NetCDF units attribute.
 
-      DSTART =  36527.0d0                  ! days (start of 2000)
-  TIDE_START =  -1.0d0                     ! days
-    TIME_REF =  19000101.0d0               ! yyyymmdd.dd
+      DSTART =  0.0d0                      ! days (start of 1999)
+  TIDE_START =  0.0d0                      ! days
+    TIME_REF =  0.0d0                      ! yyyymmdd.dd
 
 ! Nudging/relaxation time scales, inverse scales will be computed
 ! internally, [1:Ngrids].
@@ -436,16 +436,14 @@ LtracerSponge == F F                            ! temperature, salinity, inert
 ! point Sources/Sinks (like river runoff transport) and mass point
 ! Sources/Sinks (like volume vertical influx), [1:Ngrids].
 
-      LuvSrc == T                          ! horizontal momentum transport
-!       LuvSrc == F                          ! horizontal momentum transport
+      LuvSrc == F                          ! horizontal momentum transport
        LwSrc == F                          ! volume vertical influx
 
 ! Logical switches (TRUE/FALSE) to activate tracers point Sources/Sinks
 ! (like river runoff) and to specify which tracer variables to consider:
 ! [1:NAT+NPT,Ngrids].  See glossary below for details.
 
-  LtracerSrc == T T                        ! temperature, salinity, inert
-!   LtracerSrc == F F                        ! temperature, salinity, inert
+  LtracerSrc == F F                        ! temperature, salinity, inert
 
 ! Logical switches (TRUE/FALSE) to read and process climatology fields.
 ! See glossary below for details.
@@ -902,7 +900,7 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
 ! Input Sources/Sinks forcing (like river runoff) file name.
 
-     SSFNAME == <RUNOFF_FILE>
+     SSFNAME == ocean_rivers.nc
 
 ! Input forcing NetCDF file name(s).  The USER has the option to enter
 ! several files names per each nested grid.  For example, the USER may
@@ -915,19 +913,9 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 ! at the each entry, except the last one.
 
 
-     NFFILES == 10                         ! number of forcing files
+     NFFILES == 1                          ! number of forcing files
 
-     FRCNAME == <FORCINGDIR>/lwrad_down_2000.nc \                   ! forcing file 1, grid 1
-                <FORCINGDIR>/swrad_2000.nc \                        ! forcing file 2, grid 1
-                <FORCINGDIR>/Pair_2000.nc \                         ! forcing file 3, grid 1
-                <FORCINGDIR>/Qair_2000.nc \                         ! forcing file 4, grid 1
-                <FORCINGDIR>/Tair_2000.nc \                         ! forcing file 5, grid 1
-                <FORCINGDIR>/rain_2000.nc \                         ! forcing file 6, grid 1
-                <FORCINGDIR>/snow_2000.nc \                         ! forcing file 7, grid 1
-                <FORCINGDIR>/Uwind_2000.nc \                        ! forcing file 8, grid 1
-                <FORCINGDIR>/Vwind_2000.nc \                        ! forcing file 9, grid 1
-                <TIDES_FILE>                                                  ! tides, grid 1 
-
+     FRCNAME == <FORCINGDIR>/ocean_frc.nc               ! forcing file 1, grid 1
 
 ! Output NetCDF file names, [1:Ngrids].
 
