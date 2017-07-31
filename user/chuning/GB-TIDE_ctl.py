@@ -54,7 +54,7 @@ nam_files = ['varinfo.dat', 'ice.in']
 dir_nam_files = my_archive + '/' + my_run
 
 # run length
-lastjob=0
+lastjob=1
 
 # job duration (1y/6m/3m/1m)
 jobduration='1d'

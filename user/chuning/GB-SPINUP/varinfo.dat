@@ -514,24 +514,6 @@
   'r3dvar'
   1.0d0
 
-'temp_tide'                                        ! Input/Output
-  'time-accumulated potential temperature tide harmonics'
-  'Celsius'                                        ! [Celsius]
-  'temp_tide, scalar'
-  'ocean_time'
-  'idTrcH(itemp)'
-  'r3dvar'
-  1.0d0
-
-'temp_detided'                                     ! Output
-  'detided potential temperature'
-  'Celsius'                                        ! [Celsius]
-  'temp_detided, scalar, series'
-  'ocean_time'
-  'idTrcD(itemp)'
-  'r3dvar'
-  1.0d0
-
 'salt_tide'                                        ! Input/Output
   'time-accumulated salinity tide harmonics'
   'nondimensional'                                 ! [PSU]
@@ -1928,7 +1910,7 @@
 
 'Tair'                                             ! Input
   'surface air temperature'
-  'Celsius'                                        ! [Kelvin]
+  'Celsius'                                        ! [Celsius]
   'Tair, scalar, series'
   'tair_time'
   'idTair'

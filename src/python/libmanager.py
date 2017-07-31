@@ -196,8 +196,8 @@ class namelist_maker():
 		else:
 			exit('run_duration has not a valid unit')
 
-		# self.nsteps   = self.prev_nsteps + ( ndays_to_run * 86400 / self.dt )
-		self.nsteps   = ndays_to_run * 86400 / self.dt
+		self.nsteps   = self.prev_nsteps + ( ndays_to_run * 86400 / self.dt )
+		# self.nsteps   = ndays_to_run * 86400 / self.dt
 		self.nrestart = ndays_to_run * 86400 / self.dt
 		return None
 
@@ -218,7 +218,8 @@ class namelist_maker():
 			self.set_value('<LDEFOUT>','T')
 		else:
 			self.set_value('<RESTART>','-1')
-			self.set_value('<LDEFOUT>','F')
+			# self.set_value('<LDEFOUT>','F')
+			self.set_value('<LDEFOUT>','T')
 
 		self.set_value('<CLMFILE>',self.nudging_file.replace('YYYY',str(self.current_year)) )
 		self.set_value('<CLMFILEP1>',self.nudging_file.replace('YYYY',str(self.current_year+1)) )

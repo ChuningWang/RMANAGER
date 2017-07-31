@@ -31,7 +31,7 @@
 # define SPLINES_VVISC
 # define RI_SPLINES
 #endif
-#define WET_DRY
+#undef WET_DRY
 
 /* ice */
 
@@ -90,18 +90,18 @@
 #ifdef SOLVE3D
 # undef WTYPE_GRID
 
-# undef LMD_MIXING
+# define LMD_MIXING
 # ifdef LMD_MIXING
 #  define LMD_RIMIX
 #  define LMD_CONVEC
 #  define LMD_SKPP
-#  undef LMD_BKPP
+#  define LMD_BKPP
 #  define LMD_NONLOCAL
 #  define LMD_SHAPIRO
 #  undef LMD_DDMIX
 # endif
 
-# define GLS_MIXING
+# undef GLS_MIXING
 # undef MY25_MIXING
 
 # if defined GLS_MIXING || defined MY25_MIXING
@@ -142,7 +142,7 @@
 
 /* tides */
 
-#define LTIDES
+#undef LTIDES
 #ifdef LTIDES
 # if defined AVERAGES && !defined USE_DEBUG
 #  define FILTERED
@@ -161,6 +161,8 @@
 #undef UV_QDRAG
 #define UV_LDRAG
 #undef LIMIT_BSTRESS
+
+/* sediment */
 
 /* Boundary conditions...careful with grid orientation */
 

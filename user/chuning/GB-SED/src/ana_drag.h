@@ -127,7 +127,7 @@
 !
       integer :: i, j
 
-      real(r8) :: cff, cff1, h0, k1
+      real(r8) :: cff, cff1, h0
 
 #include "set_bounds.h"
 !
@@ -143,14 +143,13 @@
 !
 #if defined UV_LDRAG
       cff =  3.0d-04
-      k1 = 57.0d-4
       h0 = 1000.
       DO j=JstrT,JendT
         DO i=IstrT,IendT
           IF (GRID(ng)%h(i,j) >= h0) THEN
             rdrag(i,j)=cff
           ELSE
-            rdrag(i,j)=cff + (h0-GRID(ng)%h(i,j))*k1/h0
+            rdrag(i,j)=cff + (h0-GRID(ng)%h(i,j))*57.0d-4/h0
           END IF
         END DO
       END DO
