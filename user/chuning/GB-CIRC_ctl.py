@@ -22,10 +22,15 @@ my_run = 'GB-CIRC'
 # submission parameters dictionary
 # this contains informations ti customize your submission script
 submission_opts = {}
+# options when you use cheyenne
+submission_opts['subcmd']      = 'qsub < ./'  # batch scheduler command : bsub, srun, llsubmit,...
+submission_opts['walltime']    = '02:00:00'      # walltime
+submission_opts['projectcode'] = 'URTG0012'  # project code for accounting
+submission_opts['queue']       = 'economy'
 # options when you use yellowstone
 #submission_opts['subcmd']      = 'bsub < ./'  # batch scheduler command : bsub, srun, llsubmit,...
-#submission_opts['walltime']    = '10:00'      # walltime
-#submission_opts['projectcode'] = 'ABCD1234'  # project code for accounting
+#submission_opts['walltime']    = '04:00'      # walltime
+#submission_opts['projectcode'] = 'URTG0012'  # project code for accounting
 #submission_opts['queue']       = 'regular'
 # options when you use triton16 or triton24
 #submission_opts['subcmd']      = 'sbatch < ./'  # batch scheduler command : bsub, srun, llsubmit,...
@@ -33,10 +38,10 @@ submission_opts = {}
 #submission_opts['projectcode'] = ''             # project code for accounting
 #submission_opts['queue']       = ''
 # options when you use your workstation
-submission_opts['subcmd']      = './'           # batch scheduler command : bsub, srun, llsubmit,...
-submission_opts['walltime']    = ''             # walltime (irrelevant)
-submission_opts['projectcode'] = ''             # project code for accounting (irrelevant)
-submission_opts['queue']       = ''
+#submission_opts['subcmd']      = './'           # batch scheduler command : bsub, srun, llsubmit,...
+#submission_opts['walltime']    = ''             # walltime (irrelevant)
+#submission_opts['projectcode'] = ''             # project code for accounting (irrelevant)
+#submission_opts['queue']       = ''
 
 # init of the run object
 # give the name of the simulation as defined in runs.archive
@@ -46,7 +51,7 @@ run = rr.run_manager(my_run, my_archive,submission_opts)
 # to the run directory.
 # those files can be varinfo.dat, ice.in, bio.in,...
 #nam_files = ['varinfo.dat','ice.in','bio.in','fish.in','fleet.in','pred.in','nemsan.in']
-nam_files = ['varinfo.dat']
+nam_files = ['varinfo.dat', 'ice.in', 'stations.in', 'floats.in']
 
 # directory where namelist files listed above are stored
 # ideally, create a directory with the same name as your run
@@ -54,10 +59,10 @@ nam_files = ['varinfo.dat']
 dir_nam_files = my_archive + '/' + my_run
 
 # run length
-lastjob=0
+lastjob=9
 
 # job duration (1y/6m/3m/1m)
-jobduration='6m'
+jobduration='7d'
 
 #------------------------------------------------------------------------------------#
 # nothing to be customized below
@@ -67,7 +72,7 @@ args = sys.argv
 
 # test the presence of args
 if len(args) != 2:
-	print 'you must give the job number as an input argument to this script' 
+	print 'you must give the job number as an input argument to this script'
 	print 'to start a new simulation, type 0 else your job number' ; exit()
 else:
 	# define year (to be change by job number)

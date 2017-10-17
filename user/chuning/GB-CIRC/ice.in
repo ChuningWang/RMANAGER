@@ -159,10 +159,10 @@
 
 ! Logical switches (TRUE/FALSE) to activate writing of ice prognostic
 ! variables into HISTORY output file.
-Hout(idUice) == F
-Hout(idVice) == F
-Hout(idUiceE) == T
-Hout(idViceN) == T
+Hout(idUice) == T
+Hout(idVice) == T
+Hout(idUiceE) == F
+Hout(idViceN) == F
 Hout(idAice) == T
 Hout(idHice) == T
 Hout(idTice) == F
@@ -205,10 +205,10 @@ Hout(idSnoI) == T
 
 ! Logical switches (TRUE/FALSE) to activate writing of ice prognostic
 ! variables into AVERAGES output file.
-Aout(idUice) == F
-Aout(idVice) == F
-Aout(idUiceE) == T
-Aout(idViceN) == T
+Aout(idUice) == T
+Aout(idVice) == T
+Aout(idUiceE) == F
+Aout(idViceN) == F
 Aout(idAice) == T
 Aout(idHice) == T
 Aout(idTice) == T
@@ -275,8 +275,8 @@ Aout2(idT0mk) == F
 ! variables into HISTORY output file.
 Qout(idUice) == T
 Qout(idVice) == T
-Qout(idUiceE) == T
-Qout(idViceN) == T
+Qout(idUiceE) == F
+Qout(idViceN) == F
 Qout(idAice) == T
 Qout(idHice) == T
 Qout(idTice) == T

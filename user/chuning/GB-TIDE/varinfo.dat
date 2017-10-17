@@ -1928,7 +1928,7 @@
 
 'Tair'                                             ! Input
   'surface air temperature'
-  'Celsius'                                        ! [Kelvin]
+  'Kelvin'                                         ! [Kelvin]
   'Tair, scalar, series'
   'tair_time'
   'idTair'
@@ -2444,7 +2444,7 @@
 
 'river_temp'                                       ! Input
   'river runoff potential temperature'
-  'Celsius'                                        ! [Celsius]
+  'Celcius'                                        ! [Celcius]
   'river_temp, scalar, series'
   'river_time'
   'idRtrc(itemp)'

@@ -24,7 +24,7 @@ my_run = 'GB-TIDE'
 submission_opts = {}
 # options when you use yellowstone
 submission_opts['subcmd']      = 'bsub < ./'  # batch scheduler command : bsub, srun, llsubmit,...
-submission_opts['walltime']    = '02:00'      # walltime
+submission_opts['walltime']    = '03:00'      # walltime
 submission_opts['projectcode'] = 'URTG0012'  # project code for accounting
 submission_opts['queue']       = 'regular'
 # options when you use triton16 or triton24
@@ -46,7 +46,7 @@ run = rr.run_manager(my_run, my_archive,submission_opts)
 # to the run directory.
 # those files can be varinfo.dat, ice.in, bio.in,...
 #nam_files = ['varinfo.dat','ice.in','bio.in','fish.in','fleet.in','pred.in','nemsan.in']
-nam_files = ['varinfo.dat', 'ice.in']
+nam_files = ['varinfo.dat', 'ice.in', 'stations.in', 'floats.in']
 
 # directory where namelist files listed above are stored
 # ideally, create a directory with the same name as your run
@@ -54,10 +54,10 @@ nam_files = ['varinfo.dat', 'ice.in']
 dir_nam_files = my_archive + '/' + my_run
 
 # run length
-lastjob=1
+lastjob=6
 
 # job duration (1y/6m/3m/1m)
-jobduration='1d'
+jobduration='5d'
 
 #------------------------------------------------------------------------------------#
 # nothing to be customized below

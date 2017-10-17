@@ -32,11 +32,12 @@
 # define RI_SPLINES
 #endif
 #define WET_DRY
+#define STATIONS
 
 /* ice */
 
 #ifdef SOLVE3D
-# undef ICE_MODEL
+# define ICE_MODEL
 # ifdef ICE_MODEL
 #  define ANA_ICE
 #  define ICE_THERMO
@@ -50,18 +51,16 @@
 #  define ICE_UPWIND
 #  define ICE_BULK_FLUXES
 #  define ICE_I_O
+#  define ICE_ALB_EC92  /* for ice */
 # endif
 #endif
 
 /* output stuff */
 
 #define NO_WRITE_GRID
-#undef AVERAGES
+#undef NO_HIS
+#define AVERAGES
 #undef AVERAGES2
-
-#ifndef PERFECT_RESTART
-# define RST_SINGLE
-#endif
 
 #ifdef SOLVE3D
 # undef DIAGNOSTICS_TS
@@ -123,7 +122,6 @@
 #  define SOLAR_SOURCE
 #  define EMINUSP
 #  define ALBEDO_CURVE  /* for water */
-#  undef ICE_ALB_EC92  /* for ice */
 # endif
 # undef SCORRECTION
 #else
@@ -145,7 +143,7 @@
 #define LTIDES
 #ifdef LTIDES
 # if defined AVERAGES && !defined USE_DEBUG
-#  define FILTERED
+#  undef FILTERED
 # endif
 # define SSH_TIDES
 # define UV_TIDES

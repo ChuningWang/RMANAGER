@@ -1,0 +1,67 @@
+#!/bin/bash
+### Job Name
+#PBS -N <CASE>
+### Project Code
+#PBS -A <PROJECTCODE>
+#PBS -l walltime=<WALLTIME>
+#PBS -q <QUEUE>
+### Merge output and error files
+#PBS -j oe
+### Select <NNODES> nodes with 36 CPUs each for a total of 36*<NNODES> MPI processes
+#PBS -l select=<NNODES>:ncpus=36:mpiprocs=36
+### Send email on abort, begin and end
+#PBS -m ae
+### Specify mail recipient
+#PBS -M chuning@esm.rutgers.edu
+
+### Set TMPDIR as recommended
+mkdir -p /glade/scratch/chuning/temp
+export TMPDIR=/glade/scratch/chuning/temp
+
+CONTROLDIR=<CDIR>
+
+#------------------------------------------------------------------------------------
+# run the code
+#------------------------------------------------------------------------------------
+
+mpiexec_mpt dplace -s 1 ./oceanM <NAMELIST>  > log.<JOB> 
+
+#------------------------------------------------------------------------------------
+# check the run finished OK
+#------------------------------------------------------------------------------------
+
+check1=$( grep Blowing-up log.<JOB> )
+
+if [ -z $check1 ] ; then 
+   echo "run <JOB> did not blow up... continue..."
+else
+   echo "run <JOB> blew up... stopping..."
+   exit 1
+fi
+
+check2=$( grep DONE log.<JOB> | tail -1 | awk '{ print $2 }' )
+if [ ! -z $check2 ] ; then 
+   echo "run <JOB> finished OK... continue..."
+else
+   echo "run <JOB> did not finish... stopping..."
+   exit 1
+fi
+
+#------------------------------------------------------------------------------------
+# compress stuff into tar file
+#------------------------------------------------------------------------------------
+
+tar -cf <CASE>.<JOB>.tar log.<JOB> <NAMELIST> Run.<CASE>.<JOB>
+gzip <CASE>.<JOB>.tar
+rm log.<JOB> <NAMELIST> Run.<CASE>.<JOB>
+
+#------------------------------------------------------------------------------------
+# run finished : daisy chain with the new one
+#------------------------------------------------------------------------------------
+
+# run the next job 
+job=<JOB>
+job=$(( $job + 1 ))
+
+echo I am $( hostname ) and I am starting the script for the next job = job $job
+cd $CONTROLDIR ; ./<CASE>_ctl.py $job

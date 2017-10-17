@@ -64,7 +64,7 @@
 !
 ! Application title.
 
-       TITLE = Glacier Bay circulation model
+       TITLE = Glacier Bay circulation run
 
 ! C-preprocessing Flag.
 
@@ -91,14 +91,14 @@ GridsInLayer =  1
 ! Grid dimension parameters. See notes below in the Glossary for how to set
 ! these parameters correctly.
 
-          Lm == 500           ! Number of I-direction INTERIOR RHO-points
-          Mm == 1000          ! Number of J-direction INTERIOR RHO-points
+          Lm == 250           ! Number of I-direction INTERIOR RHO-points
+          Mm == 500           ! Number of J-direction INTERIOR RHO-points
            N == 40            ! Number of vertical levels
 
         Nbed =  0             ! Number of sediment bed layers
 
          NAT =  2             ! Number of active tracers (usually, 2)
-         NPT =  0             ! Number of inactive passive tracers
+         NPT =  3             ! Number of inactive passive tracers
          NCS =  0             ! Number of cohesive (mud) sediment tracers
          NNS =  0             ! Number of non-cohesive (sand) sediment tracers
 
@@ -146,14 +146,17 @@ GridsInLayer =  1
 !                   1       2       3       4
 
    LBC(isFsur) ==   Cha     Clo     Cha     Clo         ! free-surface
-   LBC(isUbar) ==   Shc     Clo     Shc     Clo         ! 2D U-momentum
-   LBC(isVbar) ==   Shc     Clo     Shc     Clo         ! 2D V-momentum
+   LBC(isUbar) ==   Fla     Clo     Fla     Clo         ! 2D U-momentum
+   LBC(isVbar) ==   Fla     Clo     Fla     Clo         ! 2D V-momentum
    LBC(isUvel) ==   RadNud  Clo     RadNud  Clo         ! 3D U-momentum
    LBC(isVvel) ==   RadNud  Clo     RadNud  Clo         ! 3D V-momentum
    LBC(isMtke) ==   Gra     Clo     Gra     Clo         ! mixing TKE
                                           
    LBC(isTvar) ==   RadNud  Clo     RadNud  Clo \       ! temperature
-                    RadNud  Clo     RadNud  Clo         ! salinity
+                    RadNud  Clo     RadNud  Clo \       ! salinity
+                    Clo     Clo     Clo     Clo \       ! dye_01
+                    Clo     Clo     Clo     Clo \       ! dye_02
+                    Clo     Clo     Clo     Clo         ! dye_03
 
 ! Ice boundary conditions
 
@@ -199,9 +202,9 @@ ad_VolCons(north) ==  F                            ! northern boundary
 
 ! Time-Stepping parameters.
 
-       NTIMES == <NSTEPS>
-          DT == 20.0d0
-     NDTFAST == 12
+      NTIMES == <NSTEPS>
+          DT == 30.0d0
+     NDTFAST == 15
 
 ! Model iteration loops parameters.
 
@@ -223,35 +226,41 @@ ad_VolCons(north) ==  F                            ! northern boundary
        NRREC == <RESTART>
    LcycleRST == T
         NRST == <NRESTART>
-        NSTA == 1
+        NSTA == 12
         NFLT == 1
-       NINFO == 30
+       NINFO == 120
 
 ! Output history, average, diagnostic files parameters.
 
      LDEFOUT == <LDEFOUT>
-        NHIS == 4320
-     NDEFHIS == 4320
+!        NHIS == 180
+!     NDEFHIS == 4320
+        NHIS == 120
+     NDEFHIS == 2880
+!        NHIS == 4320
+!     NDEFHIS == 4320
       NTSAVG == 1
-        NAVG == 180
-     NDEFAVG == 180
+!        NAVG == 4320
+!     NDEFAVG == 4320
+        NAVG == 2880
+     NDEFAVG == 2880
      NTSAVG2 == 1
-       NAVG2 == 30240
-    NDEFAVG2 == 0
+       NAVG2 == 40320
+    NDEFAVG2 == 40320
       NTSDIA == 1
-        NDIA == 4320
-     NDEFDIA == 4320
+        NDIA == 2880
+     NDEFDIA == 2880
 
 ! Output tangent linear and adjoint models parameters.
 
    LcycleTLM == F
-        NTLM == 180
+        NTLM == 480
      NDEFTLM == 0
    LcycleADJ == F
-        NADJ == 180
+        NADJ == 480
      NDEFADJ == 0
-        NSFF == 4320
-        NOBC == 4320
+        NSFF == 2880
+        NOBC == 2880
 
 ! GST output and check pointing restart parameters.
 
@@ -276,7 +285,7 @@ ad_VolCons(north) ==  F                            ! northern boundary
 ! Harmonic/biharmonic, horizontal viscosity coefficient for nonlinear model
 ! and adjoint-based algorithms: [Ngrids].
 
-       VISC2 == 25.0d0                          ! m2/s
+       VISC2 == 20.0d0                          ! m2/s
        VISC4 == 0.0d0                           ! m4/s
 
     ad_VISC2 == 0.0d0                           ! m2/s
@@ -287,7 +296,7 @@ ad_VolCons(north) ==  F                            ! northern boundary
 ! sponge areas) for the desired application grid.
 
     LuvSponge == F                              ! horizontal momentum
-LtracerSponge == F F                            ! temperature, salinity, inert
+LtracerSponge == F F F F F                      ! temperature, salinity, inert
 
 ! Vertical mixing coefficients for tracers in nonlinear model and
 ! basic state scale factor in adjoint-based algorithms: [1:NAT+NPT,Ngrids]
@@ -302,6 +311,15 @@ LtracerSponge == F F                            ! temperature, salinity, inert
      AKV_BAK == 1.0d-5                          ! m2/s
 
   ad_AKV_fac == 1.0d0                           ! nondimensional
+
+! Upper threshold values to limit vertical mixing coefficients computed
+! from vertical mixing parameterizations. Although this is an engineering
+! fix, the vertical mixing values inferred from ocean observations are
+! rarely higher than this upper limit value.
+
+   AKT_LIMIT == 1.0d-3 1.0d-3                   ! m2/s
+
+   AKV_LIMIT == 1.0d-3                          ! m2/s
 
 ! Turbulent closure parameters.
 
@@ -392,8 +410,8 @@ LtracerSponge == F F                            ! temperature, salinity, inert
 ! origin for tidal forcing, and model reference time for output
 ! NetCDF units attribute.
 
-      DSTART =  36527.0d0                  ! days (start of 2000)
-  TIDE_START =  -1.0d0                     ! days
+      DSTART =  39551.0d0                  ! days (Apr 15, 2008)
+  TIDE_START =  -693962.0d0                ! days
     TIME_REF =  19000101.0d0               ! yyyymmdd.dd
 
 ! Nudging/relaxation time scales, inverse scales will be computed
@@ -437,15 +455,13 @@ LtracerSponge == F F                            ! temperature, salinity, inert
 ! Sources/Sinks (like volume vertical influx), [1:Ngrids].
 
       LuvSrc == T                          ! horizontal momentum transport
-!       LuvSrc == F                          ! horizontal momentum transport
        LwSrc == F                          ! volume vertical influx
 
 ! Logical switches (TRUE/FALSE) to activate tracers point Sources/Sinks
 ! (like river runoff) and to specify which tracer variables to consider:
 ! [1:NAT+NPT,Ngrids].  See glossary below for details.
 
-  LtracerSrc == T T                        ! temperature, salinity, inert
-!   LtracerSrc == F F                        ! temperature, salinity, inert
+  LtracerSrc == T T F F T                  ! temperature, salinity, inert
 
 ! Logical switches (TRUE/FALSE) to read and process climatology fields.
 ! See glossary below for details.
@@ -454,8 +470,8 @@ LtracerSponge == F F                            ! temperature, salinity, inert
       Lm2CLM == F                          ! 2D momentum
       Lm3CLM == F                          ! 3D momentum
 
-  LnudgeTCLM == F F                        ! temperature, salinity, inert
-  LtracerCLM == F F                        ! temperature, salinity, inert
+  LnudgeTCLM == F F F F F                  ! temperature, salinity, inert
+  LtracerCLM == F F F F F                  ! temperature, salinity, inert
 
 ! Logical switches (TRUE/FALSE) to nudge the desired climatology field(s).
 ! If not analytical climatology fields, users need to turn ON the logical
@@ -465,7 +481,7 @@ LtracerSponge == F F                            ! temperature, salinity, inert
  LnudgeM2CLM == F                          ! 2D momentum
  LnudgeM3CLM == F                          ! 3D momentum
 
-  LnudgeTCLM == F F                        ! temperature, salinity, inert
+  LnudgeTCLM == F F F F F                  ! temperature, salinity, inert
 
 ! Logical switches for ice climatology and nudging
 
@@ -622,8 +638,8 @@ Hout(idTdif) == F       ! AKt                vertical T-diffusion
 Hout(idSdif) == F       ! AKs                vertical Salinity diffusion
 Hout(idHsbl) == F       ! Hsbl               depth of surface boundary layer
 Hout(idHbbl) == F       ! Hbbl               depth of bottom boundary layer
-Hout(idMtke) == F       ! tke                turbulent kinetic energy
-Hout(idMtls) == F       ! gls                turbulent length scale
+Hout(idMtke) == T       ! tke                turbulent kinetic energy
+Hout(idMtls) == T       ! gls                turbulent length scale
 
 ! Logical switches (TRUE/FALSE) to activate writing of extra inert passive
 ! tracers other than biological and sediment tracers. An inert passive tracer
@@ -632,7 +648,7 @@ Hout(idMtls) == F       ! gls                turbulent length scale
 ! NPT values are expected. However, these switches can be activated using
 ! compact parameter specification.
 
- Hout(inert) == T       ! dye_01, ...        inert passive tracers
+ Hout(inert) == T T T       ! dye_01, ...        inert passive tracers
 
 ! Logical switches (TRUE/FALSE) to activate writing of fields into
 ! surface output file.
@@ -672,7 +688,7 @@ Qout(idrain) == T                          ! precipitation rate
 ! NPT values are expected. However, these switches can be activated using
 ! compact parameter specification.
 
-Qout(inert) == F                           ! inert passive tracers
+Qout(inert) == F F F                           ! inert passive tracers
 
 ! Logical switches (TRUE/FALSE) to activate writing of fields into
 ! secondary Averages output file.
@@ -712,7 +728,7 @@ Aout2(idrain) == F                          ! precipitation rate
 ! NPT values are expected. However, these switches can be activated using
 ! compact parameter specification.
 
-Aout2(inert) == F                           ! inert passive tracers
+Aout2(inert) == T T T                           ! inert passive tracers
 
 ! Logical switches (TRUE/FALSE) to activate writing of time-averaged
 ! fields into AVERAGE output file.
@@ -761,13 +777,13 @@ Aout(idV3Sd) == F       ! v_stokes           3D V-Stokes velocity
 
 Aout(idPair) == F       ! Pair               surface air pressure
 
-Aout(idTsur) == F F     ! shflux, ssflux     surface net heat and salt flux
-Aout(idLhea) == F       ! latent             latent heat flux
-Aout(idShea) == F       ! sensible           sensible heat flux
-Aout(idLrad) == F       ! lwrad              longwave radiation flux
-Aout(idSrad) == F       ! swrad              shortwave radiation flux
-Aout(idevap) == F       ! evaporation        evaporation rate
-Aout(idrain) == F       ! rain               precipitation rate
+Aout(idTsur) == T T     ! shflux, ssflux     surface net heat and salt flux
+Aout(idLhea) == T       ! latent             latent heat flux
+Aout(idShea) == T       ! sensible           sensible heat flux
+Aout(idLrad) == T       ! lwrad              longwave radiation flux
+Aout(idSrad) == T       ! swrad              shortwave radiation flux
+Aout(idevap) == T       ! evaporation        evaporation rate
+Aout(idrain) == T       ! rain               precipitation rate
 
 Aout(idDano) == T       ! rho                density anomaly
 Aout(idVvis) == T       ! AKv                vertical viscosity
@@ -807,7 +823,7 @@ Aout(iHVTav) == F F     ! Hvom_temp, ...     tracer volume flux, <Hvom*t>
 ! Logical switches (TRUE/FALSE) to activate writing of extra inert passive
 ! tracers other than biological and sediment tracers into the AVERAGE file.
 
- Aout(inert) == T       ! dye_01, ...        inert passive tracers
+ Aout(inert) == T T T       ! dye_01, ...        inert passive tracers
 
 ! Logical switches (TRUE/FALSE) to activate writing of time-averaged,
 ! 2D momentum (ubar,vbar) diagnostic terms into DIAGNOSTIC output file.
@@ -904,6 +920,10 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
      SSFNAME == <RUNOFF_FILE>
 
+! Input tidal forcing file name.
+
+    TIDENAME == <TIDES_FILE>
+
 ! Input forcing NetCDF file name(s).  The USER has the option to enter
 ! several files names per each nested grid.  For example, the USER may
 ! have a different files for wind products, heat fluxes, rivers, tides,
@@ -915,18 +935,17 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 ! at the each entry, except the last one.
 
 
-     NFFILES == 10                         ! number of forcing files
+     NFFILES == 9                         ! number of forcing files
 
-     FRCNAME == <FORCINGDIR>/lwrad_down_2000_JRA55v1.1.nc \          ! forcing file 1, grid 1
-                <FORCINGDIR>/swrad_2000_JRA55v1.1.nc \               ! forcing file 2, grid 1
-                <FORCINGDIR>/Pair_2000_JRA55v1.1.nc \                ! forcing file 3, grid 1
-                <FORCINGDIR>/Qair_2000_JRA55v1.1.nc \                ! forcing file 4, grid 1
-                <FORCINGDIR>/Tair_2000_JRA55v1.1.nc \                ! forcing file 5, grid 1
-                <FORCINGDIR>/rain_2000_JRA55v1.1.nc \                ! forcing file 6, grid 1
-                <FORCINGDIR>/snow_2000_JRA55v1.1.nc \                ! forcing file 7, grid 1
-                <FORCINGDIR>/Uwind_2000_JRA55v1.1.nc \               ! forcing file 8, grid 1
-                <FORCINGDIR>/Vwind_2000_JRA55v1.1.nc \               ! forcing file 9, grid 1
-                <TIDES_FILE>                                                  ! tides, grid 1 
+     FRCNAME == <FORCINGDIR>/lwrad_down_2008_JRA55v1.1.nc \          ! forcing file 1, grid 1
+                <FORCINGDIR>/swrad_2008_JRA55v1.1.nc \               ! forcing file 2, grid 1
+                <FORCINGDIR>/Pair_2008_JRA55v1.1.nc \                ! forcing file 3, grid 1
+                <FORCINGDIR>/Qair_2008_JRA55v1.1.nc \                ! forcing file 4, grid 1
+                <FORCINGDIR>/Tair_2008_JRA55v1.1.nc \                ! forcing file 5, grid 1
+                <FORCINGDIR>/rain_2008_JRA55v1.1.nc \                ! forcing file 6, grid 1
+                <FORCINGDIR>/snow_2008_JRA55v1.1.nc \                ! forcing file 7, grid 1
+                <FORCINGDIR>/Uwind_2008_JRA55v1.1.nc \               ! forcing file 8, grid 1
+                <FORCINGDIR>/Vwind_2008_JRA55v1.1.nc                 ! forcing file 9, grid 1
 
 
 ! Output NetCDF file names, [1:Ngrids].
@@ -941,6 +960,7 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
      ADJNAME == <OUTPUTDIR>/<CONFCASE>_adj.nc
      AVGNAME == <OUTPUTDIR>/<CONFCASE>_avg.nc
     AVG2NAME == <OUTPUTDIR>/<CONFCASE>_avg2.nc
+     HARNAME == <OUTPUTDIR>/<CONFCASE>_har.nc
      DIANAME == <OUTPUTDIR>/<CONFCASE>_dia.nc
      STANAME == <OUTPUTDIR>/<CONFCASE>_sta.nc
      FLTNAME == <OUTPUTDIR>/<CONFCASE>_flt.nc
@@ -1553,6 +1573,12 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 ! AKT_BAK      Background vertical mixing coefficient (m2/s) for active
 !                (NAT) and inert (NPT) tracer variables.
 !
+! AKT_LIMIT    Upper threshold values to limit vertical diffusion coefficients
+!                computed from vertical mixing parameterizations (GLS_MIXING,
+!                LMD_MIXING, MY25_MIXING). Sometimes, these parameterizations
+!                yield high mixing values and the threshold values are used as
+!                upper limiter when LIMIT_VDIFF is activated.
+!
 ! ad_AKT_fac   Adjoint-based algorithms vertical mixing, basic state, scale
 !                factor (nondimensional) for active (NAT) and inert (NPT)
 !                tracer variables. In some applications, smaller/larger
@@ -1564,6 +1590,12 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !------------------------------------------------------------------------------
 !
 ! AKV_BAK      Background vertical mixing coefficient (m2/s) for momentum.
+!
+! AKV_LIMIT    Upper threshold value to limit vertical viscosity coefficient
+!                computed from vertical mixing parameterizations (GLS_MIXING,
+!                LMD_MIXING, MY25_MIXING). Sometimes, these parameterizations
+!                yield a high mixing value and the threshold value is used as
+!                upper limiter when LIMIT_VVISC is activated.
 !
 ! ad_AKV_fac   Adjoint-based algorithms vertical mixing, basic state, scale
 !                factor (nondimensional) for momentum. In some applications,
@@ -2592,6 +2624,16 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 !                be processed in ROMS because of the logical switches are
 !                FALSE the second grid.
 !
+! Input/output tidal forcing file name:
+!
+! TIDENAME     Tidal constituents period, phase, elevation, and current data.
+!                This data is needed when SSH_TIDES, UV_TIDES, or both are
+!                activated to force tides at the open boundaries. Currently,
+!                in nested applications, the tidal forcing is used in the
+!                coarser/larger grid (ng=1). If AVERAGES_DETIDE is activated,
+!                several least-squares time-accumulated harmonic variables
+!                are written into this NetCDF file to facilitate restart for
+!                during long fitting simulations.
 !
 ! Input forcing file(s) name:
 !
@@ -2638,6 +2680,7 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 ! TLMNAME      Output tangent linear file name.
 ! ADJNAME      Output adjoint file name.
 ! AVGNAME      Output averages file name.
+! HARNAME      Output least-squares detiding harmonics file name.
 ! DIANAME      Output diagnostics file name.
 ! STANAME      Output stations file name.
 ! FLTNAME      Output floats file name.

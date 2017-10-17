@@ -9,7 +9,7 @@
 ** Options for Glacier Bay Test.
 **
 ** Application flag:   GB
-** Input script:       ocean_GB.in
+** Input script:       ocean_GB-SPINUP.in
 */
 
 /* general 1 */
@@ -32,6 +32,7 @@
 # define RI_SPLINES
 #endif
 #define WET_DRY
+#define STATIONS
 
 /* ice */
 
@@ -50,18 +51,16 @@
 #  define ICE_UPWIND
 #  define ICE_BULK_FLUXES
 #  define ICE_I_O
+#  define ICE_ALB_EC92  /* for ice */
 # endif
 #endif
 
 /* output stuff */
 
 #define NO_WRITE_GRID
-#undef AVERAGES
+#undef NO_HIS
+#define AVERAGES
 #undef AVERAGES2
-
-#ifndef PERFECT_RESTART
-# define RST_SINGLE
-#endif
 
 #ifdef SOLVE3D
 # undef DIAGNOSTICS_TS
@@ -88,19 +87,20 @@
 /* vertical mixing */
 
 #ifdef SOLVE3D
-# define WTYPE_GRID
+# undef WTYPE_GRID
 
-# define LMD_MIXING
+# undef LMD_MIXING
 # ifdef LMD_MIXING
 #  define LMD_RIMIX
 #  define LMD_CONVEC
 #  define LMD_SKPP
+#  undef LMD_BKPP
 #  define LMD_NONLOCAL
 #  define LMD_SHAPIRO
 #  undef LMD_DDMIX
 # endif
 
-# undef GLS_MIXING
+# define GLS_MIXING
 # undef MY25_MIXING
 
 # if defined GLS_MIXING || defined MY25_MIXING
@@ -116,15 +116,14 @@
 #ifdef SOLVE3D
 # define CORE_FORCING
 # define BULK_FLUXES
-# undef CCSM_FLUXES
+# define CCSM_FLUXES
 # if defined BULK_FLUXES || defined CCSM_FLUXES
 #  define LONGWAVE_OUT
 #  define SOLAR_SOURCE
 #  define EMINUSP
 #  define ALBEDO_CURVE  /* for water */
-#  define ICE_ALB_EC92  /* for ice */
 # endif
-# define SCORRECTION
+# undef SCORRECTION
 #else
 # define ANA_SMFLUX
 # define ANA_STFLUX
@@ -143,20 +142,33 @@
 #define LTIDES
 #ifdef LTIDES
 # if defined AVERAGES && !defined USE_DEBUG
-#  define FILTERED
+#  undef FILTERED
 # endif
 # define SSH_TIDES
 # define UV_TIDES
 # define ADD_FSOBC
 # define ADD_M2OBC
+# define RAMP_TIDES
 # undef TIDES_ASTRO
 # undef POT_TIDES
 #endif
 
 #define UV_DRAG_GRID
 #define ANA_DRAG
-#define UV_QDRAG
-#define LIMIT_BSTRESS
+#undef UV_QDRAG
+#define UV_LDRAG
+#undef LIMIT_BSTRESS
+
+/* passive tracers */
+
+#define T_PASSIVE
+#ifdef T_PASSIVE
+# define ANA_BPFLUX        /* analytical bottom passive tracers fluxes */
+# define ANA_SPFLUX 
+# define TRC_PSOURCE
+# undef ANA_TRC_PSOURCE
+# undef AGE_MEAN
+#endif
 
 /* Boundary conditions...careful with grid orientation */
 
