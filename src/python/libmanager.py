@@ -645,7 +645,7 @@ class setup_simulation():
         # define machine on which we run
         self.list_machine = ['workstation','yellowstone','triton16','triton24','cheyenne']
         self.machine = ''
-        print 'Answer with one of these :', self.list_machine 	
+        print 'Answer with one of these :', self.list_machine
         while self.machine not in self.list_machine:
             self.machine = raw_input('On which supercomputer are we running ? \n >>> ')
 

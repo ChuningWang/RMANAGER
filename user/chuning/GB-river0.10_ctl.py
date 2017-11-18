@@ -16,17 +16,17 @@ import sys
 # my personal information
 # write here the complete path to the directory containing your runs.archive
 # typically $HOME/RMANAGER/user/yourself
-my_archive = '<MY_RMANAGER>'
-my_run = '<MY_RUN>'
+my_archive = '/glade/u/home/chuning/git/RMANAGER/user/chuning'
+my_run = 'GB-river0.10'
 
 # submission parameters dictionary
 # this contains informations ti customize your submission script
 submission_opts = {}
 # options when you use cheyenne
-#submission_opts['subcmd']      = 'qsub < ./'  # batch scheduler command : bsub, srun, llsubmit,...
-#submission_opts['walltime']    = '01:30:00'      # walltime
-#submission_opts['projectcode'] = 'URTG0012'  # project code for accounting
-#submission_opts['queue']       = 'economy'
+submission_opts['subcmd']      = 'qsub < ./'  # batch scheduler command : bsub, srun, llsubmit,...
+submission_opts['walltime']    = '01:30:00'      # walltime
+submission_opts['projectcode'] = 'URTG0012'  # project code for accounting
+submission_opts['queue']       = 'economy'
 # options when you use yellowstone
 #submission_opts['subcmd']      = 'bsub < ./'  # batch scheduler command : bsub, srun, llsubmit,...
 #submission_opts['walltime']    = '10:00'      # walltime
@@ -38,14 +38,14 @@ submission_opts = {}
 #submission_opts['projectcode'] = ''             # project code for accounting
 #submission_opts['queue']       = ''
 # options when you use your workstation
-submission_opts['subcmd']      = './'           # batch scheduler command : bsub, srun, llsubmit,...
-submission_opts['walltime']    = ''             # walltime (irrelevant)
-submission_opts['projectcode'] = ''             # project code for accounting (irrelevant)
-submission_opts['queue']       = ''
+#submission_opts['subcmd']      = './'           # batch scheduler command : bsub, srun, llsubmit,...
+#submission_opts['walltime']    = ''             # walltime (irrelevant)
+#submission_opts['projectcode'] = ''             # project code for accounting (irrelevant)
+#submission_opts['queue']       = ''
 
 # init of the run object
 # give the name of the simulation as defined in runs.archive
-run = rr.run_manager(my_run, my_archive,submission_opts)
+run = rr.run_manager(my_run, my_archive, submission_opts)
 
 # secondary namelists : put here the name of the files that need to be copied
 # to the run directory.
@@ -59,10 +59,10 @@ nam_files = ['varinfo.dat']
 dir_nam_files = my_archive + '/' + my_run
 
 # run length
-lastjob=0
+lastjob=9
 
 # job duration (1y/6m/3m/1m)
-jobduration='6m'
+jobduration='7d'
 
 #------------------------------------------------------------------------------------#
 # nothing to be customized below

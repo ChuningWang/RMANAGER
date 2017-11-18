@@ -1,21 +1,3 @@
-[GB-SPINUP]
-confcase           = GB-SPINUP
-machine            = yellowstone
-namelist_skel      = ocean_GB-SPINUP.template
-use_leap_years     = True
-NtileI             = 8
-NTileJ             = 12
-PTile		   = 36
-grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_usgs_grd.nc
-init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_usgs_ic_2000_01_03_SODA3.3.1.nc
-nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_usgs_clim_2000.nc
-bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_usgs_bdry_spinup_SODA3.3.1.nc
-tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_usgs_tides_otps.nc
-sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
-runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_usgs_rivers_spinup_Hill.nc
-forcing_dir        = /glade/p/work/chuning/gb_roms/frc
-output_dir         = /glade/scratch/chuning/tmpdir_GB-SPINUP
-
 [GB-TIDE]
 confcase           = GB-TIDE
 machine            = yellowstone
@@ -43,7 +25,7 @@ NtileI             = 9
 NTileJ             = 12
 PTile		   = 36
 grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
-init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_04_15_CTD_floodFill.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_06_15_CTD_floodFill.nc
 nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
 bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc
 tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
@@ -52,21 +34,188 @@ runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008
 forcing_dir        = /glade/p/work/chuning/gb_roms/frc
 output_dir         = /glade/scratch/chuning/tmpdir_GB-CIRC
 
-[GB-SED]
-confcase           = GB-SED
-machine            = yellowstone
-namelist_skel      = ocean_GB-SED.template
+[GB-ref]
+confcase           = GB-ref
+machine            = cheyenne
+namelist_skel      = ocean_GB-ref.template
 use_leap_years     = True
-NtileI             = 8
+NtileI             = 6
 NTileJ             = 12
 PTile		   = 36
-grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_Kate_grd_smooth.nc
-init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GB-SPINUP_rst.nc
-nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_clim_2000.nc
-bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_Kate_bdry_2000_SODA3.3.1.nc
-tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_Kate_tides_otps.nc
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_04_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc |
+		     /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2009_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
 sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
-runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_Kate_rivers_2000_Hill.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill.nc |
+		     /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2009_Hill.nc
 forcing_dir        = /glade/p/work/chuning/gb_roms/frc
-output_dir         = /glade/scratch/chuning/tmpdir_GB-SED
+output_dir         = /glade/scratch/chuning/tmpdir_GB-ref
+
+[GB-mixing1]
+confcase           = GB-mixing1
+machine            = cheyenne
+namelist_skel      = ocean_GB-mixing1.template
+use_leap_years     = True
+NtileI             = 9
+NTileJ             = 12
+PTile		   = 36
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_06_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
+sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill.nc
+forcing_dir        = /glade/p/work/chuning/gb_roms/frc
+output_dir         = /glade/scratch/chuning/tmpdir_GB-mixing1
+
+[GB-mixing2]
+confcase           = GB-mixing2
+machine            = cheyenne
+namelist_skel      = ocean_GB-mixing2.template
+use_leap_years     = True
+NtileI             = 9
+NTileJ             = 12
+PTile		   = 36
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_06_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
+sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill.nc
+forcing_dir        = /glade/p/work/chuning/gb_roms/frc
+output_dir         = /glade/scratch/chuning/tmpdir_GB-mixing2
+
+[GB-komega]
+confcase           = GB-komega
+machine            = cheyenne
+namelist_skel      = ocean_GB-komega.template
+use_leap_years     = True
+NtileI             = 9
+NTileJ             = 12
+PTile		   = 36
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_06_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
+sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill.nc
+forcing_dir        = /glade/p/work/chuning/gb_roms/frc
+output_dir         = /glade/scratch/chuning/tmpdir_GB-komega
+
+[GB-kpp]
+confcase           = GB-kpp
+machine            = cheyenne
+namelist_skel      = ocean_GB-ref.template
+use_leap_years     = True
+NtileI             = 9
+NTileJ             = 12
+PTile		   = 36
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_06_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
+sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill.nc
+forcing_dir        = /glade/p/work/chuning/gb_roms/frc
+output_dir         = /glade/scratch/chuning/tmpdir_GB-kpp
+
+[GB-nosplines]
+confcase           = GB-nosplines
+machine            = cheyenne
+namelist_skel      = ocean_GB-ref.template
+use_leap_years     = True
+NtileI             = 9
+NTileJ             = 12
+PTile		   = 36
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_06_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
+sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill.nc
+forcing_dir        = /glade/p/work/chuning/gb_roms/frc
+output_dir         = /glade/scratch/chuning/tmpdir_GB-nosplines
+
+[GB-nobulkflux]
+confcase           = GB-nobulkflux
+machine            = cheyenne
+namelist_skel      = ocean_GB-ref.template
+use_leap_years     = True
+NtileI             = 9
+NTileJ             = 12
+PTile		   = 36
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_06_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
+sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill.nc
+forcing_dir        = /glade/p/work/chuning/gb_roms/frc
+output_dir         = /glade/scratch/chuning/tmpdir_GB-nobulkflux
+
+[GB-riveronly]
+confcase           = GB-riveronly
+machine            = cheyenne
+namelist_skel      = ocean_GB-riveronly.template
+use_leap_years     = True
+NtileI             = 9
+NTileJ             = 12
+PTile		   = 36
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_06_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc |
+		     /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2009_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
+sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill_ana.nc
+forcing_dir        = /glade/p/work/chuning/gb_roms/frc
+output_dir         = /glade/scratch/chuning/tmpdir_GB-riveronly
+
+[GB-river0.50]
+confcase           = GB-river0.50
+machine            = cheyenne
+namelist_skel      = ocean_GB-ref.template
+use_leap_years     = True
+NtileI             = 6
+NTileJ             = 12
+PTile		   = 36
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_04_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc |
+		     /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2009_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
+sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill_0.50.nc
+forcing_dir        = /glade/p/work/chuning/gb_roms/frc
+output_dir         = /glade/scratch/chuning/tmpdir_GB-river0.50
+
+[GB-river0.10]
+confcase           = GB-river0.10
+machine            = cheyenne
+namelist_skel      = ocean_GB-ref.template
+use_leap_years     = True
+NtileI             = 6
+NTileJ             = 12
+PTile		   = 36
+grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_04_15_CTD_floodFill.nc
+nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc |
+		     /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2009_CTD_ADCP.nc
+tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
+sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill_0.10.nc
+forcing_dir        = /glade/p/work/chuning/gb_roms/frc
+output_dir         = /glade/scratch/chuning/tmpdir_GB-river0.10
 

@@ -5,6 +5,7 @@ namelist_skel      = ocean_<MY_RUN>.template
 use_leap_years     = True
 NtileI             = 1
 NTileJ             = 1
+PTile		   = 1
 grid_file          = <SCRATCH>/grd.nc
 init_file          = <SCRATCH>/ini.nc
 nudging_file       = <SCRATCH>/clim.nc
