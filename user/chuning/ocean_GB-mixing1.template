@@ -226,21 +226,21 @@ ad_VolCons(north) ==  F                            ! northern boundary
        NRREC == <RESTART>
    LcycleRST == T
         NRST == <NRESTART>
-        NSTA == 18
+        NSTA == 15
         NFLT == 1
-       NINFO == 18
+       NINFO == 15
 
 ! Output history, average, diagnostic files parameters.
 
      LDEFOUT == <LDEFOUT>
-        NHIS == 4320
+        NHIS == 360
      NDEFHIS == 4320
       NTSAVG == 1
         NAVG == 4320
      NDEFAVG == 4320
      NTSAVG2 == 1
-       NAVG2 == 40320
-    NDEFAVG2 == 40320
+       NAVG2 == 4320
+    NDEFAVG2 == 4320
       NTSDIA == 1
         NDIA == 2880
      NDEFDIA == 2880
@@ -271,7 +271,7 @@ ad_VolCons(north) ==  F                            ! northern boundary
 ! and adjoint-based algorithms: [1:NAT+NPT,Ngrids].
 
         TNU2 == 2*1.0d0                         ! m2/s
-        TNU4 == 2*0.0d0                         ! m4/s
+        TNU4 == 2*1.0d0                         ! m4/s
 
      ad_TNU2 == 0.0d0  0.0d0                    ! m2/s
      ad_TNU4 == 0.0d0  0.0d0                    ! m4/s
@@ -280,7 +280,7 @@ ad_VolCons(north) ==  F                            ! northern boundary
 ! and adjoint-based algorithms: [Ngrids].
 
        VISC2 == 5.0d0                           ! m2/s
-       VISC4 == 0.0d0                           ! m4/s
+       VISC4 == 25.0d0                          ! m4/s
 
     ad_VISC2 == 0.0d0                           ! m2/s
     ad_VISC4 == 0.0d0                           ! m4/s
@@ -295,14 +295,14 @@ LtracerSponge == F F F F F                      ! temperature, salinity, inert
 ! Vertical mixing coefficients for tracers in nonlinear model and
 ! basic state scale factor in adjoint-based algorithms: [1:NAT+NPT,Ngrids]
 
-     AKT_BAK == 2*1.0d-7                        ! m2/s
+     AKT_BAK == 2*1.0d-6                        ! m2/s
 
   ad_AKT_fac == 1.0d0  1.0d0                    ! nondimensional
 
 ! Vertical mixing coefficient for momentum for nonlinear model and
 ! basic state scale factor in adjoint-based algorithms: [Ngrids].
 
-     AKV_BAK == 1.0d-6                          ! m2/s
+     AKV_BAK == 1.0d-5                          ! m2/s
 
   ad_AKV_fac == 1.0d0                           ! nondimensional
 
@@ -404,7 +404,7 @@ LtracerSponge == F F F F F                      ! temperature, salinity, inert
 ! origin for tidal forcing, and model reference time for output
 ! NetCDF units attribute.
 
-      DSTART =  39612.0d0                  ! days (Jun 15, 2008)
+      DSTART =  39551.0d0                  ! days (Apr 15, 2008)
   TIDE_START =  -693962.0d0                ! days
     TIME_REF =  19000101.0d0               ! yyyymmdd.dd
 
@@ -903,7 +903,7 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
    NCLMFILES == 1                         ! number of climate files
      CLMNAME == <CLMFILE>
 
-    NBCFILES == 1                          ! number of boundary files
+    NBCFILES == 1                         ! number of boundary files
      BRYNAME == <BRYFILE>
 
 ! Input climatology nudging coefficients file name.
@@ -931,15 +931,24 @@ Dout(iTvdif) == T T     ! temp_vdiff, ...    vertical diffusion
 
      NFFILES == 9                         ! number of forcing files
 
-     FRCNAME == <FORCINGDIR>/lwrad_down_2008_JRA55v1.1.nc \          ! forcing file 1, grid 1
-                <FORCINGDIR>/swrad_2008_JRA55v1.1.nc \               ! forcing file 2, grid 1
-                <FORCINGDIR>/Pair_2008_JRA55v1.1.nc \                ! forcing file 3, grid 1
-                <FORCINGDIR>/Qair_2008_JRA55v1.1.nc \                ! forcing file 4, grid 1
-                <FORCINGDIR>/Tair_2008_JRA55v1.1.nc \                ! forcing file 5, grid 1
-                <FORCINGDIR>/rain_2008_JRA55v1.1.nc \                ! forcing file 6, grid 1
-                <FORCINGDIR>/snow_2008_JRA55v1.1.nc \                ! forcing file 7, grid 1
-                <FORCINGDIR>/Uwind_2008_JRA55v1.1.nc \               ! forcing file 8, grid 1
-                <FORCINGDIR>/Vwind_2008_JRA55v1.1.nc                 ! forcing file 9, grid 1
+     FRCNAME == <FORCINGDIR>/lwrad_down_2008_JRA55v1.1.nc |
+                <FORCINGDIR>/lwrad_down_2009_JRA55v1.1.nc \
+                <FORCINGDIR>/swrad_2008_JRA55v1.1.nc |
+                <FORCINGDIR>/swrad_2009_JRA55v1.1.nc \
+                <FORCINGDIR>/Pair_2008_JRA55v1.1.nc |
+                <FORCINGDIR>/Pair_2009_JRA55v1.1.nc \
+                <FORCINGDIR>/Qair_2008_JRA55v1.1.nc |
+                <FORCINGDIR>/Qair_2009_JRA55v1.1.nc \
+                <FORCINGDIR>/Tair_2008_JRA55v1.1.nc |
+                <FORCINGDIR>/Tair_2009_JRA55v1.1.nc \
+                <FORCINGDIR>/rain_2008_JRA55v1.1.nc |
+                <FORCINGDIR>/rain_2009_JRA55v1.1.nc \
+                <FORCINGDIR>/snow_2008_JRA55v1.1.nc |
+                <FORCINGDIR>/snow_2009_JRA55v1.1.nc \
+                <FORCINGDIR>/Uwind_2008_JRA55v1.1.nc |
+                <FORCINGDIR>/Uwind_2009_JRA55v1.1.nc \
+                <FORCINGDIR>/Vwind_2008_JRA55v1.1.nc |
+                <FORCINGDIR>/Vwind_2009_JRA55v1.1.nc
 
 
 ! Output NetCDF file names, [1:Ngrids].

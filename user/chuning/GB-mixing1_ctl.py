@@ -24,7 +24,7 @@ my_run = 'GB-mixing1'
 submission_opts = {}
 # options when you use cheyenne
 submission_opts['subcmd']      = 'qsub < ./'  # batch scheduler command : bsub, srun, llsubmit,...
-submission_opts['walltime']    = '02:00:00'      # walltime
+submission_opts['walltime']    = '01:30:00'      # walltime
 submission_opts['projectcode'] = 'URTG0012'  # project code for accounting
 submission_opts['queue']       = 'economy'
 # options when you use yellowstone
@@ -59,7 +59,7 @@ nam_files = ['varinfo.dat']
 dir_nam_files = my_archive + '/' + my_run
 
 # run length
-lastjob=1
+lastjob=9
 
 # job duration (1y/6m/3m/1m)
 jobduration='7d'

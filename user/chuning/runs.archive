@@ -59,16 +59,18 @@ confcase           = GB-mixing1
 machine            = cheyenne
 namelist_skel      = ocean_GB-mixing1.template
 use_leap_years     = True
-NtileI             = 9
+NtileI             = 6
 NTileJ             = 12
 PTile		   = 36
 grid_file          = /glade/p/work/chuning/gb_roms/grd/GlacierBay_lr_grd.nc
-init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_06_15_CTD_floodFill.nc
+init_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_ic_2008_04_15_CTD_floodFill.nc
 nudging_file       = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_clim_2000.nc
-bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc
+bdry_file          = /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2008_CTD_ADCP.nc |
+		     /glade/p/work/chuning/gb_roms/bc_ic/GlacierBay_lr_bc_2009_CTD_ADCP.nc
 tide_file          = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_tides_otps.nc
 sssr_file          = /glade/p/work/chuning/gb_roms/sss.nc
-runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill.nc
+runoff_file        = /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2008_Hill.nc |
+		     /glade/p/work/chuning/gb_roms/frc/GlacierBay_lr_rivers_2009_Hill.nc
 forcing_dir        = /glade/p/work/chuning/gb_roms/frc
 output_dir         = /glade/scratch/chuning/tmpdir_GB-mixing1
 

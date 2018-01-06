@@ -90,6 +90,8 @@
 #  define CRAIG_BANNER
 #  define KANTHA_CLAYSON
 #  define CHARNOK
+#  undef LIMIT_VDIFF
+#  undef LIMIT_VVISC
 # endif
 #endif
 
@@ -130,6 +132,8 @@
 # define ANA_STFLUX
 # define ANA_SSFLUX
 #endif
+
+#define ANA_WINDS
 
 /* point sources (rivers, line sources) */
 
